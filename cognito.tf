@@ -60,7 +60,7 @@ resource "aws_cognito_user_pool" "flow_user_pool" {
 }
 
 resource "aws_cognito_user_pool_domain" "flow_cognito_domain" {
-  domain       = "flow"
+  domain       = "flow-app-user-pool"
   user_pool_id = aws_cognito_user_pool.flow_user_pool.id
 }
 
