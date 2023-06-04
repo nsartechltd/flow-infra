@@ -33,26 +33,6 @@ resource "aws_cognito_user_pool" "flow_user_pool" {
 
   username_attributes = ["email"]
 
-  schema {
-    attribute_data_type = "String"
-    name = "name"
-    required = true
-    string_attribute_constraints {
-      min_length = 1
-      max_length = 100
-    }
-  }
-
-  schema {
-    attribute_data_type = "String"
-    name = "picture"
-    required = false
-    string_attribute_constraints {
-      min_length = 1
-      max_length = 1000
-    }
-  }
-
   verification_message_template {
     email_subject = "Confirm Flow Account"
     email_message = "Hi. Please confirm your account by entering the following code: {####}. Kind Regards, Flow Team"
