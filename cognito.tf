@@ -47,4 +47,6 @@ resource "aws_cognito_user_pool_domain" "flow_cognito_domain" {
 resource "aws_cognito_user_pool_client" "flow_ui_client" {
   name = "flow"
   user_pool_id = aws_cognito_user_pool.flow_user_pool.id
+
+  prevent_user_existence_errors = "ENABLED"
 }
