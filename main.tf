@@ -8,4 +8,10 @@ provider "aws" {
 
 terraform {
   backend "s3" {}
+  required_providers {
+    postgresql = {
+      source = "cyrilgdn/postgresql"
+      version = "1.21.1-beta.1"
+    }
+  }
 }
