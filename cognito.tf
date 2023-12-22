@@ -64,6 +64,18 @@ resource "aws_cognito_user_pool" "flow_user_pool" {
   }
 
   schema {
+    attribute_data_type      = "String"
+    name                     = "organisation"
+    developer_only_attribute = false
+    mutable                  = false
+    required                 = false
+    string_attribute_constraints {
+      max_length = 50
+      min_length = 1
+    }
+  }
+
+  schema {
     attribute_data_type = "String"
     name                = "birthdate"
     mutable             = false
