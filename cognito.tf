@@ -34,9 +34,8 @@ resource "aws_cognito_user_pool" "flow_user_pool" {
   username_attributes = ["email"]
 
   verification_message_template {
-    email_subject_by_link = "Confirm Your Flow Account"
-    email_message_by_link = "Hi. Please confirm your account by clicking the following link: {##Click Here##}. Kind Regards, Flow Team"
-    default_email_option  = "CONFIRM_WITH_LINK"
+    email_subject = "Confirm Your Flow Account"
+    email_message = "<h2>Verify your Flow account</h2><h3>Use the below code to verify your account</h3><code>{####}</code>"
   }
 
   schema {
