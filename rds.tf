@@ -22,12 +22,13 @@ locals {
 resource "aws_rds_cluster" "flow_rds" {
   cluster_identifier      = "flow-${var.environment}-rds"
   engine                  = "aurora-postgresql"
-  engine_version          = "14.8"
-  engine_mode             = "provisioned"
+  engine_version          = "13.12"
+  engine_mode             = "serverless"
   database_name           = "flow"
   master_username         = "flow_user"
   master_password         = random_password.flow_database_password.result
   backup_retention_period = 7
+  enable_http_endpoint    = true
 
   # notes time of creation of rds.tf file
   final_snapshot_identifier = "flow-${var.environment}-rds-${local.timestamp_short}"
@@ -35,9 +36,11 @@ resource "aws_rds_cluster" "flow_rds" {
   vpc_security_group_ids = [aws_security_group.rds.id]
   db_subnet_group_name   = aws_db_subnet_group.flow_subnet_group.id
 
-  serverlessv2_scaling_configuration {
-    max_capacity             = 1
-    min_capacity             = 0.5
+  scaling_configuration {
+    auto_pause               = var.environment == "prod" ? false : true
+    max_capacity             = 2
+    min_capacity             = 2
+    seconds_until_auto_pause = 3600
   }
 
   lifecycle {
@@ -48,11 +51,4 @@ resource "aws_rds_cluster" "flow_rds" {
     Name        = "flow-${var.environment}"
     Environment = var.environment
   }
-}
-
-resource "aws_rds_cluster_instance" "flow_rds_instance" {
-  cluster_identifier = aws_rds_cluster.flow_rds.id
-  instance_class     = "db.serverless"
-  engine             = aws_rds_cluster.flow_rds.engine
-  engine_version     = aws_rds_cluster.flow_rds.engine_version
 }
