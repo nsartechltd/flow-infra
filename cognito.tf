@@ -92,4 +92,6 @@ resource "aws_cognito_user_pool_client" "flow_ui_client" {
   user_pool_id = aws_cognito_user_pool.flow_user_pool.id
 
   prevent_user_existence_errors = "ENABLED"
+
+  explicit_auth_flows = ["ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
 }
