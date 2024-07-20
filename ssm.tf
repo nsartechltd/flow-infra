@@ -12,6 +12,13 @@ resource "aws_ssm_parameter" "cognito_user_pool_id" {
   overwrite = true
 }
 
+resource "aws_ssm_parameter" "cognito_client_id" {
+  name      = "/flow/cognito/CLIENT_ID"
+  type      = "String"
+  value     = aws_cognito_user_pool_client.flow_ui_client.id
+  overwrite = true
+}
+
 resource "aws_ssm_parameter" "DB_USERNAME" {
   name      = "/flow/rds/DB_USERNAME"
   type      = "String"
